@@ -45,7 +45,7 @@ function App() {
     setSelectedType("");
     setCountries([]);
     setEngines([]);
-  }, [selectedModel]);
+  }, [selectedMake, selectedModel]);
 
   useEffect(() => {
     if (selectedMake && selectedModel && selectedType) {
@@ -57,7 +57,7 @@ function App() {
     }
     setSelectedCountry("");
     setEngines([]);
-  }, [selectedType]);
+  }, [selectedMake, selectedModel, selectedType]);
 
   useEffect(() => {
     if (selectedMake && selectedModel && selectedType && selectedCountry) {
@@ -67,7 +67,7 @@ function App() {
     } else {
       setEngines([]);
     }
-  }, [selectedCountry]);
+  }, [selectedMake, selectedModel, selectedType, selectedCountry]);
 
   return (
     <div style={{ padding: 20 }}>
