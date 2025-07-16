@@ -12,7 +12,7 @@ function App() {
   const [selectedType, setSelectedType] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
 
-  const API_BASE = "http://localhost:5000"; // Flask runs on port 5000
+  const API_BASE = "https://khmax-backend.onrender.com"; // Flask runs on port 5000
 
   useEffect(() => {
     fetch(`${API_BASE}/makes`)
