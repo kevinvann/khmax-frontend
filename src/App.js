@@ -11,6 +11,8 @@ function App() {
   const [selectedModel, setSelectedModel] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedEngine, setSelectedEngine] = useState("");
+  const [taxPrices, setTaxPrices] = useState(null);
 
   const API_BASE = "https://khmax-backend.onrender.com"; // Flask runs on port 5000
 
@@ -30,8 +32,12 @@ function App() {
     }
     setSelectedModel("");
     setTypes([]);
+    setSelectedType("");
     setCountries([]);
+    setSelectedCountry("");
     setEngines([]);
+    setSelectedEngine("");
+    setTaxPrices(null);
   }, [selectedMake]);
 
   useEffect(() => {
@@ -42,9 +48,13 @@ function App() {
     } else {
       setTypes([]);
     }
+
     setSelectedType("");
     setCountries([]);
+    setSelectedCountry("");
     setEngines([]);
+    setSelectedEngine("");
+    setTaxPrices(null);
   }, [selectedMake, selectedModel]);
 
   useEffect(() => {
@@ -57,6 +67,8 @@ function App() {
     }
     setSelectedCountry("");
     setEngines([]);
+    setSelectedEngine("");
+    setTaxPrices(null);
   }, [selectedMake, selectedModel, selectedType]);
 
   useEffect(() => {
@@ -67,7 +79,36 @@ function App() {
     } else {
       setEngines([]);
     }
+    setSelectedEngine("");
+    setTaxPrices(null);
   }, [selectedMake, selectedModel, selectedType, selectedCountry]);
+
+  useEffect(() => {
+  const fetchTaxPrices = async () => {
+    if (selectedMake && selectedModel && selectedType && selectedCountry && selectedEngine) {
+      const params = new URLSearchParams({
+        make: selectedMake,
+        model: selectedModel,
+        type: selectedType,
+        country: selectedCountry,
+        engine: selectedEngine
+      });
+
+      const res = await fetch(`${API_BASE}/tax_prices?${params}`);
+      const data = await res.json();
+
+      if (!data.error) {
+        setTaxPrices(data);
+      } else {
+        setTaxPrices(null);
+      }
+    } else {
+      setTaxPrices(null);
+    }
+  };
+
+  fetchTaxPrices();
+}, [selectedMake, selectedModel, selectedType, selectedCountry, selectedEngine]);
 
   return (
     <div style={{ padding: 20 }}>
@@ -106,10 +147,46 @@ function App() {
       <br /><br />
 
       <label>Engine:</label>
-      <select disabled={!engines.length}>
+      <select value={selectedEngine} onChange={e => setSelectedEngine(e.target.value)} disabled={!engines.length}>
         <option value="">-- Select Engine --</option>
         {engines.map(engine => <option key={engine} value={engine}>{engine}</option>)}
       </select>
+
+      {taxPrices && (
+        <div style={{ marginTop: 20 }}>
+          <h3>Tax Prices (2016–2025)</h3>
+          <table border="1" cellPadding="6">
+            <thead>
+              <tr>
+                {Object.keys(taxPrices).map(year => (
+                  <th key={year}>{year}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {Object.values(taxPrices).map((price, index) => (
+                  <td key={index}>
+                    {price != null ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(price) : '—'}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
+      <div style={{ marginTop: 60, textAlign: "center" }}>
+        <h1 style={{
+          fontSize: "36px",
+          color: "#ff0055",
+          textShadow: "2px 2px 0 black",
+          fontWeight: "900",
+          letterSpacing: "2px",
+          transform: "rotate(-2deg)"
+        }}>
+          WEBSITE CREATED BY THE BIGGEST BADDEST FRESHEST ALL-MIGHTY BUNKEATH MENG 💥🔥
+        </h1>
+      </div>
     </div>
   );
 }
