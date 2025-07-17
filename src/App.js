@@ -141,84 +141,160 @@ function App() {
     <div style={{ padding: 20 }}>
       <h2>Select Vehicle Info</h2>
 
-      <div style={rowStyle}>
-        <label style={labelStyle}>Make:</label>
-        <select
-          value={selectedMake}
-          onChange={(e) => setSelectedMake(e.target.value)}
-        >
-          <option value="">-- Select Make --</option>
-          {makes.map((make) => (
-            <option key={make} value={make}>
-              {make}
-            </option>
-          ))}
-        </select>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "flex-start",
+          gap: 20, // space between dropdowns and image
+        }}
+      >
+        {/* Dropdowns on the left */}
+        <div style={{ maxWidth: 400 }}>
+          <div style={rowStyle}>
+            <label style={labelStyle}>Make:</label>
+            <select
+              value={selectedMake}
+              onChange={(e) => setSelectedMake(e.target.value)}
+            >
+              <option value="">-- Select Make --</option>
+              {makes.map((make) => (
+                <option key={make} value={make}>
+                  {make}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Model:</label>
+            <select
+              value={selectedModel}
+              onChange={(e) => setSelectedModel(e.target.value)}
+              disabled={!models.length}
+            >
+              <option value="">-- Select Model --</option>
+              {models.map((model) => (
+                <option key={model} value={model}>
+                  {model}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Type:</label>
+            <select
+              value={selectedType}
+              onChange={(e) => setSelectedType(e.target.value)}
+              disabled={!types.length}
+            >
+              <option value="">-- Select Type --</option>
+              {types.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Country:</label>
+            <select
+              value={selectedCountry}
+              onChange={(e) => setSelectedCountry(e.target.value)}
+              disabled={!countries.length}
+            >
+              <option value="">-- Select Country --</option>
+              {countries.map((country) => (
+                <option key={country} value={country}>
+                  {country}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div style={rowStyle}>
+            <label style={labelStyle}>Engine:</label>
+            <select
+              value={selectedEngine}
+              onChange={(e) => setSelectedEngine(e.target.value)}
+              disabled={!engines.length}
+            >
+              <option value="">-- Select Engine --</option>
+              {engines.map((engine) => (
+                <option key={engine} value={engine}>
+                  {engine}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Image on the right */}
+        <div style={{ marginTop: 12, position: "relative", width: 150, height: "auto" }}>
+          {/* Bun Image */}
+          <img
+            src="/images/bun.png"
+            alt="Bun"
+            style={{
+              width: 150,
+              borderRadius: 12,
+              boxShadow: "0 0 10px rgba(0,0,0,0.25)",
+              transform: "rotate(2deg)",
+              display: "block",
+            }}
+          />
+
+          {/* Sparkles */}
+          <style>
+            {`
+    @keyframes sparkle {
+      0% { transform: scale(0.5) rotate(0deg); opacity: 0; }
+      50% { transform: scale(1.5) rotate(180deg); opacity: 1; }
+      100% { transform: scale(0.5) rotate(360deg); opacity: 0; }
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: yellow;
+      box-shadow: 0 0 12px 4px gold;
+      opacity: 0;
+      animation: sparkle 2s infinite ease-in-out;
+      transform: rotate(45deg);
+      clip-path: polygon(
+        50% 0%,
+        60% 35%,
+        100% 35%,
+        68% 57%,
+        80% 100%,
+        50% 75%,
+        20% 100%,
+        32% 57%,
+        0% 35%,
+        40% 35%
+      );
+    }
+
+    .sparkle1 { top: -10px; left: 10px; animation-delay: 0s; }
+    .sparkle2 { top: 20px; right: -10px; animation-delay: 0.5s; }
+    .sparkle3 { bottom: -10px; left: 30px; animation-delay: 1s; }
+    .sparkle4 { bottom: 10px; right: 0px; animation-delay: 1.5s; }
+  `}
+          </style>
+
+
+          <div className="sparkle sparkle1"></div>
+          <div className="sparkle sparkle2"></div>
+          <div className="sparkle sparkle3"></div>
+          <div className="sparkle sparkle4"></div>
+        </div>
+
+
       </div>
 
-      <div style={rowStyle}>
-        <label style={labelStyle}>Model:</label>
-        <select
-          value={selectedModel}
-          onChange={(e) => setSelectedModel(e.target.value)}
-          disabled={!models.length}
-        >
-          <option value="">-- Select Model --</option>
-          {models.map((model) => (
-            <option key={model} value={model}>
-              {model}
-            </option>
-          ))}
-        </select>
-      </div>
 
-      <div style={rowStyle}>
-        <label style={labelStyle}>Type:</label>
-        <select
-          value={selectedType}
-          onChange={(e) => setSelectedType(e.target.value)}
-          disabled={!types.length}
-        >
-          <option value="">-- Select Type --</option>
-          {types.map((type) => (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div style={rowStyle}>
-        <label style={labelStyle}>Country:</label>
-        <select
-          value={selectedCountry}
-          onChange={(e) => setSelectedCountry(e.target.value)}
-          disabled={!countries.length}
-        >
-          <option value="">-- Select Country --</option>
-          {countries.map((country) => (
-            <option key={country} value={country}>
-              {country}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div style={rowStyle}>
-        <label style={labelStyle}>Engine:</label>
-        <select
-          value={selectedEngine}
-          onChange={(e) => setSelectedEngine(e.target.value)}
-          disabled={!engines.length}
-        >
-          <option value="">-- Select Engine --</option>
-          {engines.map((engine) => (
-            <option key={engine} value={engine}>
-              {engine}
-            </option>
-          ))}
-        </select>
-      </div>
 
       {taxPrices && (
         <div style={{ marginTop: 50 }}>
@@ -237,9 +313,9 @@ function App() {
                   <td>
                     {price != null
                       ? new Intl.NumberFormat("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                        }).format(price)
+                        style: "currency",
+                        currency: "USD",
+                      }).format(price)
                       : "—"}
                   </td>
                 </tr>
@@ -249,9 +325,9 @@ function App() {
         </div>
       )}
 
-<div style={{ marginTop: 60, textAlign: "center" }}>
-  <style>
-    {`
+      <div style={{ marginTop: 60, textAlign: "center" }}>
+        <style>
+          {`
       @keyframes pulse {
         0% {
           transform: rotate(-2deg) scale(1);
@@ -267,22 +343,22 @@ function App() {
         }
       }
     `}
-  </style>
+        </style>
 
-  <h1
-    style={{
-      fontSize: "36px",
-      color: "#ff0055",
-      fontWeight: "900",
-      letterSpacing: "2px",
-      animation: "pulse 1s ease-in-out infinite",
-      display: "inline-block",
-    }}
-  >
-    WEBSITE CREATED BY THE BIGGEST BADDEST FRESHEST ALL-MIGHTY BUNKEATH MENG
-    💥🔥
-  </h1>
-</div>
+        <h1
+          style={{
+            fontSize: "36px",
+            color: "#ff0055",
+            fontWeight: "900",
+            letterSpacing: "2px",
+            animation: "pulse 1s ease-in-out infinite",
+            display: "inline-block",
+          }}
+        >
+          WEBSITE CREATED BY THE BIGGEST BADDEST FRESHEST ALL-MIGHTY BUNKEATH MENG
+          💥🔥
+        </h1>
+      </div>
     </div>
   );
 }
