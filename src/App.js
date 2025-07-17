@@ -249,21 +249,40 @@ function App() {
         </div>
       )}
 
-      <div style={{ marginTop: 60, textAlign: "center" }}>
-        <h1
-          style={{
-            fontSize: "36px",
-            color: "#ff0055",
-            textShadow: "2px 2px 0 black",
-            fontWeight: "900",
-            letterSpacing: "2px",
-            transform: "rotate(-2deg)",
-          }}
-        >
-          WEBSITE CREATED BY THE BIGGEST BADDEST FRESHEST ALL-MIGHTY BUNKEATH MENG
-          💥🔥
-        </h1>
-      </div>
+<div style={{ marginTop: 60, textAlign: "center" }}>
+  <style>
+    {`
+      @keyframes pulse {
+        0% {
+          transform: rotate(-2deg) scale(1);
+          text-shadow: 2px 2px 0 black;
+        }
+        50% {
+          transform: rotate(-2deg) scale(1.2);
+          text-shadow: 4px 4px 10px red;
+        }
+        100% {
+          transform: rotate(-2deg) scale(1);
+          text-shadow: 2px 2px 0 black;
+        }
+      }
+    `}
+  </style>
+
+  <h1
+    style={{
+      fontSize: "36px",
+      color: "#ff0055",
+      fontWeight: "900",
+      letterSpacing: "2px",
+      animation: "pulse 1s ease-in-out infinite",
+      display: "inline-block",
+    }}
+  >
+    WEBSITE CREATED BY THE BIGGEST BADDEST FRESHEST ALL-MIGHTY BUNKEATH MENG
+    💥🔥
+  </h1>
+</div>
     </div>
   );
 }
