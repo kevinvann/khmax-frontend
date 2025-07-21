@@ -21,7 +21,6 @@ function App() {
       .then(res => res.json())
       .then(data => {
         setMakes(data);
-        // Auto-select if only one make
         if (data.length === 1) setSelectedMake(data[0]);
       });
   }, []);
@@ -125,7 +124,11 @@ function App() {
     fetchTaxPrices();
   }, [selectedMake, selectedModel, selectedType, selectedCountry, selectedEngine]);
 
-  // Styles for label+select containers and labels
+  // Popular makes list
+  const popularMakes = ["Toyota", "Honda", "Ford", "Chevrolet", "BMW"];
+  const popularOptions = popularMakes.filter((make) => makes.includes(make));
+  const otherOptions = makes.filter((make) => !popularMakes.includes(make));
+
   const rowStyle = {
     display: "flex",
     alignItems: "center",
@@ -141,14 +144,7 @@ function App() {
     <div style={{ padding: 20 }}>
       <h2>Select Vehicle Info</h2>
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          gap: 20, // space between dropdowns and image
-        }}
-      >
-        {/* Dropdowns on the left */}
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 20 }}>
         <div style={{ maxWidth: 400 }}>
           <div style={rowStyle}>
             <label style={labelStyle}>Make:</label>
@@ -157,11 +153,24 @@ function App() {
               onChange={(e) => setSelectedMake(e.target.value)}
             >
               <option value="">-- Select Make --</option>
-              {makes.map((make) => (
-                <option key={make} value={make}>
-                  {make}
-                </option>
-              ))}
+              {popularOptions.length > 0 && (
+                <optgroup label="Popular Makes">
+                  {popularOptions.map((make) => (
+                    <option key={make} value={make}>
+                      {make}
+                    </option>
+                  ))}
+                </optgroup>
+              )}
+              {otherOptions.length > 0 && (
+                <optgroup label="All Other Makes">
+                  {otherOptions.map((make) => (
+                    <option key={make} value={make}>
+                      {make}
+                    </option>
+                  ))}
+                </optgroup>
+              )}
             </select>
           </div>
 
@@ -230,9 +239,8 @@ function App() {
           </div>
         </div>
 
-        {/* Image on the right */}
-        <div style={{ marginTop: 12, position: "relative", width: 150, height: "auto" }}>
-          {/* Bun Image */}
+        {/* Image + sparkles */}
+        <div style={{ marginTop: 12, position: "relative", width: 150 }}>
           <img
             src="/images/bun.png"
             alt="Bun"
@@ -245,56 +253,50 @@ function App() {
             }}
           />
 
-          {/* Sparkles */}
           <style>
             {`
-    @keyframes sparkle {
-      0% { transform: scale(0.5) rotate(0deg); opacity: 0; }
-      50% { transform: scale(1.5) rotate(180deg); opacity: 1; }
-      100% { transform: scale(0.5) rotate(360deg); opacity: 0; }
-    }
+              @keyframes sparkle {
+                0% { transform: scale(0.5) rotate(0deg); opacity: 0; }
+                50% { transform: scale(1.5) rotate(180deg); opacity: 1; }
+                100% { transform: scale(0.5) rotate(360deg); opacity: 0; }
+              }
 
-    .sparkle {
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      background: yellow;
-      box-shadow: 0 0 12px 4px gold;
-      opacity: 0;
-      animation: sparkle 2s infinite ease-in-out;
-      transform: rotate(45deg);
-      clip-path: polygon(
-        50% 0%,
-        60% 35%,
-        100% 35%,
-        68% 57%,
-        80% 100%,
-        50% 75%,
-        20% 100%,
-        32% 57%,
-        0% 35%,
-        40% 35%
-      );
-    }
+              .sparkle {
+                position: absolute;
+                width: 16px;
+                height: 16px;
+                background: yellow;
+                box-shadow: 0 0 12px 4px gold;
+                opacity: 0;
+                animation: sparkle 2s infinite ease-in-out;
+                transform: rotate(45deg);
+                clip-path: polygon(
+                  50% 0%,
+                  60% 35%,
+                  100% 35%,
+                  68% 57%,
+                  80% 100%,
+                  50% 75%,
+                  20% 100%,
+                  32% 57%,
+                  0% 35%,
+                  40% 35%
+                );
+              }
 
-    .sparkle1 { top: -10px; left: 10px; animation-delay: 0s; }
-    .sparkle2 { top: 20px; right: -10px; animation-delay: 0.5s; }
-    .sparkle3 { bottom: -10px; left: 30px; animation-delay: 1s; }
-    .sparkle4 { bottom: 10px; right: 0px; animation-delay: 1.5s; }
-  `}
+              .sparkle1 { top: -10px; left: 10px; animation-delay: 0s; }
+              .sparkle2 { top: 20px; right: -10px; animation-delay: 0.5s; }
+              .sparkle3 { bottom: -10px; left: 30px; animation-delay: 1s; }
+              .sparkle4 { bottom: 10px; right: 0px; animation-delay: 1.5s; }
+            `}
           </style>
-
 
           <div className="sparkle sparkle1"></div>
           <div className="sparkle sparkle2"></div>
           <div className="sparkle sparkle3"></div>
           <div className="sparkle sparkle4"></div>
         </div>
-
-
       </div>
-
-
 
       {taxPrices && (
         <div style={{ marginTop: 50 }}>
@@ -313,9 +315,9 @@ function App() {
                   <td>
                     {price != null
                       ? new Intl.NumberFormat("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                      }).format(price)
+                          style: "currency",
+                          currency: "USD",
+                        }).format(price)
                       : "—"}
                   </td>
                 </tr>
@@ -328,21 +330,21 @@ function App() {
       <div style={{ marginTop: 60, textAlign: "center" }}>
         <style>
           {`
-      @keyframes pulse {
-        0% {
-          transform: rotate(-2deg) scale(1);
-          text-shadow: 2px 2px 0 black;
-        }
-        50% {
-          transform: rotate(-2deg) scale(1.2);
-          text-shadow: 4px 4px 10px red;
-        }
-        100% {
-          transform: rotate(-2deg) scale(1);
-          text-shadow: 2px 2px 0 black;
-        }
-      }
-    `}
+            @keyframes pulse {
+              0% {
+                transform: rotate(-2deg) scale(1);
+                text-shadow: 2px 2px 0 black;
+              }
+              50% {
+                transform: rotate(-2deg) scale(1.2);
+                text-shadow: 4px 4px 10px red;
+              }
+              100% {
+                transform: rotate(-2deg) scale(1);
+                text-shadow: 2px 2px 0 black;
+              }
+            }
+          `}
         </style>
 
         <h1
@@ -355,8 +357,7 @@ function App() {
             display: "inline-block",
           }}
         >
-          WEBSITE CREATED BY THE BIGGEST BADDEST FRESHEST ALL-MIGHTY BUNKEATH MENG
-          💥🔥
+          WEBSITE CREATED BY THE BIGGEST BADDEST FRESHEST ALL-MIGHTY BUNKEATH MENG 💥🔥
         </h1>
       </div>
     </div>
