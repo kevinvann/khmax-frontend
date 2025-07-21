@@ -239,63 +239,6 @@ function App() {
           </div>
         </div>
 
-        {/* Image + sparkles */}
-        <div style={{ marginTop: 12, position: "relative", width: 150 }}>
-          <img
-            src="/images/bun.png"
-            alt="Bun"
-            style={{
-              width: 150,
-              borderRadius: 12,
-              boxShadow: "0 0 10px rgba(0,0,0,0.25)",
-              transform: "rotate(2deg)",
-              display: "block",
-            }}
-          />
-
-          <style>
-            {`
-              @keyframes sparkle {
-                0% { transform: scale(0.5) rotate(0deg); opacity: 0; }
-                50% { transform: scale(1.5) rotate(180deg); opacity: 1; }
-                100% { transform: scale(0.5) rotate(360deg); opacity: 0; }
-              }
-
-              .sparkle {
-                position: absolute;
-                width: 16px;
-                height: 16px;
-                background: yellow;
-                box-shadow: 0 0 12px 4px gold;
-                opacity: 0;
-                animation: sparkle 2s infinite ease-in-out;
-                transform: rotate(45deg);
-                clip-path: polygon(
-                  50% 0%,
-                  60% 35%,
-                  100% 35%,
-                  68% 57%,
-                  80% 100%,
-                  50% 75%,
-                  20% 100%,
-                  32% 57%,
-                  0% 35%,
-                  40% 35%
-                );
-              }
-
-              .sparkle1 { top: -10px; left: 10px; animation-delay: 0s; }
-              .sparkle2 { top: 20px; right: -10px; animation-delay: 0.5s; }
-              .sparkle3 { bottom: -10px; left: 30px; animation-delay: 1s; }
-              .sparkle4 { bottom: 10px; right: 0px; animation-delay: 1.5s; }
-            `}
-          </style>
-
-          <div className="sparkle sparkle1"></div>
-          <div className="sparkle sparkle2"></div>
-          <div className="sparkle sparkle3"></div>
-          <div className="sparkle sparkle4"></div>
-        </div>
       </div>
 
       {taxPrices && (
@@ -327,39 +270,6 @@ function App() {
         </div>
       )}
 
-      <div style={{ marginTop: 60, textAlign: "center" }}>
-        <style>
-          {`
-            @keyframes pulse {
-              0% {
-                transform: rotate(-2deg) scale(1);
-                text-shadow: 2px 2px 0 black;
-              }
-              50% {
-                transform: rotate(-2deg) scale(1.2);
-                text-shadow: 4px 4px 10px red;
-              }
-              100% {
-                transform: rotate(-2deg) scale(1);
-                text-shadow: 2px 2px 0 black;
-              }
-            }
-          `}
-        </style>
-
-        <h1
-          style={{
-            fontSize: "36px",
-            color: "#ff0055",
-            fontWeight: "900",
-            letterSpacing: "2px",
-            animation: "pulse 1s ease-in-out infinite",
-            display: "inline-block",
-          }}
-        >
-          WEBSITE CREATED BY THE BIGGEST BADDEST FRESHEST ALL-MIGHTY BUNKEATH MENG 💥🔥
-        </h1>
-      </div>
     </div>
   );
 }
