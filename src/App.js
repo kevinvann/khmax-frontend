@@ -124,143 +124,193 @@ function App() {
     fetchTaxPrices();
   }, [selectedMake, selectedModel, selectedType, selectedCountry, selectedEngine]);
 
-  // Popular makes list
   const popularMakes = ["Toyota", "Honda", "Ford", "Chevrolet", "BMW"];
   const popularOptions = popularMakes.filter((make) => makes.includes(make));
   const otherOptions = makes.filter((make) => !popularMakes.includes(make));
 
-  const rowStyle = {
-    display: "flex",
-    alignItems: "center",
-    marginBottom: 12,
+  const wrapperStyle = {
+    fontFamily: "Arial, sans-serif",
+    maxWidth: 800,
+    margin: "0 auto",
+    padding: 20,
+    color: "#333",
   };
 
-  const labelStyle = {
-    width: 100,
+  const bannerStyle = {
+    background: "#2c3e50",
+    color: "#fff",
+    padding: "20px 30px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderRadius: "0 0 8px 8px",
+    marginBottom: 40,
+  };
+
+  const logoStyle = {
+    fontSize: 24,
     fontWeight: "bold",
   };
 
+  const navStyle = {
+    display: "flex",
+    gap: 20,
+  };
+
+  const linkStyle = {
+    color: "#ecf0f1",
+    textDecoration: "none",
+    fontSize: 16,
+  };
+
+  const formGroup = {
+    marginBottom: 20,
+  };
+
+  const labelStyle = {
+    display: "block",
+    fontWeight: "bold",
+    marginBottom: 6,
+  };
+
+  const selectStyle = {
+    width: "100%",
+    padding: 8,
+    fontSize: 14,
+  };
+
+  const tableStyle = {
+    width: "100%",
+    borderCollapse: "collapse",
+    marginTop: 30,
+  };
+
+  const thTdStyle = {
+    border: "1px solid #ddd",
+    padding: 10,
+    textAlign: "left",
+  };
+
   return (
-    <div style={{ padding: 20 }}>
+    <div style={wrapperStyle}>
+      <header style={bannerStyle}>
+        <div style={logoStyle}>Khmer Car Tax Lookup</div>
+        <nav style={navStyle}>
+          <a href="/" style={linkStyle}>Home</a>
+          <a href="/about" style={linkStyle}>About</a>
+          <a href="/contact" style={linkStyle}>Contact</a>
+        </nav>
+      </header>
+
       <h2>Select Vehicle Info</h2>
 
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 20 }}>
-        <div style={{ maxWidth: 400 }}>
-          <div style={rowStyle}>
-            <label style={labelStyle}>Make:</label>
-            <select
-              value={selectedMake}
-              onChange={(e) => setSelectedMake(e.target.value)}
-            >
-              <option value="">-- Select Make --</option>
-              {popularOptions.length > 0 && (
-                <optgroup label="Popular Makes">
-                  {popularOptions.map((make) => (
-                    <option key={make} value={make}>
-                      {make}
-                    </option>
-                  ))}
-                </optgroup>
-              )}
-              {otherOptions.length > 0 && (
-                <optgroup label="All Other Makes">
-                  {otherOptions.map((make) => (
-                    <option key={make} value={make}>
-                      {make}
-                    </option>
-                  ))}
-                </optgroup>
-              )}
-            </select>
-          </div>
-
-          <div style={rowStyle}>
-            <label style={labelStyle}>Model:</label>
-            <select
-              value={selectedModel}
-              onChange={(e) => setSelectedModel(e.target.value)}
-              disabled={!models.length}
-            >
-              <option value="">-- Select Model --</option>
-              {models.map((model) => (
-                <option key={model} value={model}>
-                  {model}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div style={rowStyle}>
-            <label style={labelStyle}>Type:</label>
-            <select
-              value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value)}
-              disabled={!types.length}
-            >
-              <option value="">-- Select Type --</option>
-              {types.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div style={rowStyle}>
-            <label style={labelStyle}>Country:</label>
-            <select
-              value={selectedCountry}
-              onChange={(e) => setSelectedCountry(e.target.value)}
-              disabled={!countries.length}
-            >
-              <option value="">-- Select Country --</option>
-              {countries.map((country) => (
-                <option key={country} value={country}>
-                  {country}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div style={rowStyle}>
-            <label style={labelStyle}>Engine:</label>
-            <select
-              value={selectedEngine}
-              onChange={(e) => setSelectedEngine(e.target.value)}
-              disabled={!engines.length}
-            >
-              <option value="">-- Select Engine --</option>
-              {engines.map((engine) => (
-                <option key={engine} value={engine}>
-                  {engine}
-                </option>
-              ))}
-            </select>
-          </div>
+      <div>
+        <div style={formGroup}>
+          <label style={labelStyle}>Make</label>
+          <select
+            style={selectStyle}
+            value={selectedMake}
+            onChange={(e) => setSelectedMake(e.target.value)}
+          >
+            <option value="">-- Select Make --</option>
+            {popularOptions.length > 0 && (
+              <optgroup label="Popular Makes">
+                {popularOptions.map((make) => (
+                  <option key={make} value={make}>{make}</option>
+                ))}
+              </optgroup>
+            )}
+            {otherOptions.length > 0 && (
+              <optgroup label="Other Makes">
+                {otherOptions.map((make) => (
+                  <option key={make} value={make}>{make}</option>
+                ))}
+              </optgroup>
+            )}
+          </select>
         </div>
 
+        <div style={formGroup}>
+          <label style={labelStyle}>Model</label>
+          <select
+            style={selectStyle}
+            value={selectedModel}
+            onChange={(e) => setSelectedModel(e.target.value)}
+            disabled={!models.length}
+          >
+            <option value="">-- Select Model --</option>
+            {models.map((model) => (
+              <option key={model} value={model}>{model}</option>
+            ))}
+          </select>
+        </div>
+
+        <div style={formGroup}>
+          <label style={labelStyle}>Type</label>
+          <select
+            style={selectStyle}
+            value={selectedType}
+            onChange={(e) => setSelectedType(e.target.value)}
+            disabled={!types.length}
+          >
+            <option value="">-- Select Type --</option>
+            {types.map((type) => (
+              <option key={type} value={type}>{type}</option>
+            ))}
+          </select>
+        </div>
+
+        <div style={formGroup}>
+          <label style={labelStyle}>Country</label>
+          <select
+            style={selectStyle}
+            value={selectedCountry}
+            onChange={(e) => setSelectedCountry(e.target.value)}
+            disabled={!countries.length}
+          >
+            <option value="">-- Select Country --</option>
+            {countries.map((country) => (
+              <option key={country} value={country}>{country}</option>
+            ))}
+          </select>
+        </div>
+
+        <div style={formGroup}>
+          <label style={labelStyle}>Engine</label>
+          <select
+            style={selectStyle}
+            value={selectedEngine}
+            onChange={(e) => setSelectedEngine(e.target.value)}
+            disabled={!engines.length}
+          >
+            <option value="">-- Select Engine --</option>
+            {engines.map((engine) => (
+              <option key={engine} value={engine}>{engine}</option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {taxPrices && (
-        <div style={{ marginTop: 50 }}>
-          <h2>Tax Prices</h2>
-          <table border="1" cellPadding="6">
+        <div style={{ marginTop: 55 }}>
+          <h2 style={{ marginBottom: 5 }}>Tax Prices</h2>
+          <table style={tableStyle}>
             <thead>
               <tr>
-                <th>Year</th>
-                <th>Price</th>
+                <th style={thTdStyle}>Year</th>
+                <th style={thTdStyle}>Price</th>
               </tr>
             </thead>
             <tbody>
               {Object.entries(taxPrices).map(([year, price]) => (
                 <tr key={year}>
-                  <td>{year}</td>
-                  <td>
+                  <td style={thTdStyle}>{year}</td>
+                  <td style={thTdStyle}>
                     {price != null
                       ? new Intl.NumberFormat("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                        }).format(price)
+                        style: "currency",
+                        currency: "USD",
+                      }).format(price)
                       : "—"}
                   </td>
                 </tr>
@@ -269,7 +319,6 @@ function App() {
           </table>
         </div>
       )}
-
     </div>
   );
 }
